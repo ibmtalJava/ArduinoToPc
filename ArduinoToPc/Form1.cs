@@ -32,9 +32,48 @@ namespace ArduinoToPc
                     , portName.Text
                 );
                 connectStatus.Text = "Connected.....";
+                timer1.Enabled = true;
+                timer1.Interval = 1000;
             }
             catch (Exception ex) {
                 connectStatus.Text = "Connection Error...";
+            }
+        }
+
+        private void disconnect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ac.serialPort.Close();
+                connectStatus.Text = "Disconnected...";
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            timer1.Enabled = false;
+
+        }
+
+        private void sendButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ac.send(modul.Text, action.Text, data1.Text, data2.Text, data3.Text);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+               gelenveri.Text=ac.serialPort.ReadExisting();
+            }
+            catch (Exception ex) { 
+            
             }
         }
     }
